@@ -5,7 +5,7 @@
 ```
 /output/
 ├── backend/          # Python后端服务
-│   ├── app.py        # Flask主程序
+│   ├── app.py        # Flask主程序（直接入口）
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   ├── vercel.json
@@ -29,10 +29,13 @@ Render提供免费的后端服务部署，适合个人项目。
 4. 配置如下：
    - **Name**: `ssq-predictor-backend`
    - **Runtime**: `Python 3`
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn -b 0.0.0.0:10000 app:app`
-5. 点击 "Create Web Service"
-6. 等待部署完成，记录下你的服务URL（如 `https://ssq-predictor-backend.onrender.com`）
+   - **Build Command**: `pip install --upgrade pip && pip install -r requirements.txt`
+   - **Start Command**: `gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120 app:app`
+5. 添加环境变量（可选）：
+   - **Key**: `PYTHON_VERSION`
+   - **Value**: `3.11.0`
+6. 点击 "Create Web Service"
+7. 等待部署完成，记录下你的服务URL（如 `https://ssq-predictor-backend.onrender.com`）
 
 ### 步骤2：部署前端
 
@@ -47,9 +50,9 @@ Render提供免费的后端服务部署，适合个人项目。
    - **Value**: `https://ssq-predictor-backend.onrender.com`（你的后端URL）
 5. 点击 "Create Static Site"
 
-### 步骤3：配置CORS
+### 步骤3：配置CORS（如果需要）
 
-修改 `backend/app.py` 中的CORS配置（如果需要）：
+修改 `backend/app.py` 中的CORS配置：
 
 ```python
 CORS(app, origins=["https://your-frontend-url.onrender.com"])
@@ -223,6 +226,11 @@ PORT=5000
 - 检查 `VITE_API_URL` 是否设置正确
 - 确保后端服务已启动
 - 检查网络连接
+
+### Q5: ModuleNotFoundError: No module named 'wsgi'
+
+- 已修复：直接使用 `app:app` 作为入口，无需 wsgi.py
+- 确保 render.yaml 中的 startCommand 是 `gunicorn --bind 0.0.0.0:$PORT app:app`
 
 ---
 

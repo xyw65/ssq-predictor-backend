@@ -11,7 +11,7 @@
 ```
 .
 ├── backend/          # Python Flask后端
-│   ├── app.py        # 主程序（含爬虫+预测算法）
+│   ├── app.py        # 主程序（Flask app 直接入口）
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   ├── vercel.json
@@ -100,6 +100,20 @@ npm run dev
 - **Render** - 免费，适合个人项目
 - **Vercel** - 适合前端部署
 - **Docker** - 适合自建服务器
+
+### Render 部署要点
+
+**Build Command:**
+```bash
+pip install --upgrade pip && pip install -r requirements.txt
+```
+
+**Start Command:**
+```bash
+gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120 app:app
+```
+
+注意：直接使用 `app:app`，不需要 wsgi.py
 
 ## ⚙️ 环境变量
 
