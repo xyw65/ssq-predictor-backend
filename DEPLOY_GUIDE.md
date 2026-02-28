@@ -29,8 +29,8 @@ Render提供免费的后端服务部署，适合个人项目。
 4. 配置如下：
    - **Name**: `ssq-predictor-backend`
    - **Runtime**: `Python 3`
-   - **Build Command**: `pip install --upgrade pip && pip install -r requirements.txt`
-   - **Start Command**: `gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120 app:app`
+   - **Build Command**: `pip install --upgrade pip && cd backend && pip install -r requirements.txt`
+   - **Start Command**: `cd backend && gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120 app:app`
 5. 添加环境变量（可选）：
    - **Key**: `PYTHON_VERSION`
    - **Value**: `3.11.0`

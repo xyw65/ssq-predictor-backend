@@ -105,15 +105,15 @@ npm run dev
 
 **Build Command:**
 ```bash
-pip install --upgrade pip && pip install -r requirements.txt
+pip install --upgrade pip && cd backend && pip install -r requirements.txt
 ```
 
 **Start Command:**
 ```bash
-gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120 app:app
+cd backend && gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120 app:app
 ```
 
-注意：直接使用 `app:app`，不需要 wsgi.py
+注意：代码在 backend/ 子目录中，需要先 `cd backend`
 
 ## ⚙️ 环境变量
 
